@@ -26,7 +26,7 @@ model Establishment {
   collaborator  CollaboratorOnEstablishment[]
   availableTime AvailableTime[]
   client        EstablishmentOnClient[]
-  schedule    Schedule[]
+  appointment    Appointment[]
 
   @@map("establishment")
 }
@@ -80,7 +80,7 @@ model Service {
   created_at    DateTime?       @default(now())
   updated_at    DateTime?       @default(now())
   availableTime AvailableTime[]
-  schedule    Schedule[]
+  appointment    Appointment[]
 
   @@map("service")
 }
@@ -101,7 +101,7 @@ model Collaborator {
   service       CollaboratorOnServices[]
   establishment CollaboratorOnEstablishment[]
   availableTime AvailableTime[]
-  schedule    Schedule[]
+  appointment    Appointment[]
 
   @@map("collaborator")
 }
@@ -166,7 +166,7 @@ model Client {
   created_at            DateTime?               @default(now())
   updated_at            DateTime?               @default(now())
   establishmentOnClient EstablishmentOnClient[]
-  schedule              Schedule[]
+  appointment              Appointment[]
 
   @@map("client")
 }
@@ -184,7 +184,7 @@ model EstablishmentOnClient {
   @@id([establishment_id, client_id])
 }
 
-model Schedule {
+model Appointment {
   id         String    @id @default(uuid())
   date       DateTime
   dateCancel DateTime?
@@ -205,5 +205,5 @@ model Schedule {
   collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
   collaborator_id String
 
-  @@map("schedule")
+  @@map("appointment")
 }
