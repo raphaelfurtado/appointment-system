@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Establishment {
+  id         String    @id @default(uuid())
+  name       String
+  photo      String
+  cover      String
+  email      String
+  password   String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  address       Address?
+  localization  Localization?
+  service       Service[]
+  collaborator  CollaboratorOnEstablishment[]
+  availableTime AvailableTime[]
+  client        EstablishmentOnClient[]
+  schedule    Schedule[]
+
+  @@map("establishment")
+}
+
+model Address {
+  id      String @id @default(uuid())
+  city    String
+  uf      String
+  cep     String
+  number  Int
+  country String
+
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String        @unique
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("address")
+}
+
+model Localization {
+  id          String @id @default(uuid())
+  type        String
+  coordinates String
+
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String        @unique
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("localization")
+}
+
+model Service {
+  id         String  @id @default(uuid())
+  name       String
+  price      Decimal @db.Decimal(9, 2)
+  duration   Int
+  commission Decimal
+  recurrence Int
+  description String
+  status     String
+
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String
+
+  collaborator CollaboratorOnServices[]
+
+  created_at    DateTime?       @default(now())
+  updated_at    DateTime?       @default(now())
+  availableTime AvailableTime[]
+  schedule    Schedule[]
+
+  @@map("service")
+}
+
+model Collaborator {
+  id         String    @id @default(uuid())
+  name       String
+  photo      String
+  phone      String
+  email      String
+  password   String
+  birthDate  String
+  genre      String
+  status     String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  service       CollaboratorOnServices[]
+  establishment CollaboratorOnEstablishment[]
+  availableTime AvailableTime[]
+  schedule    Schedule[]
+
+  @@map("collaborator")
+}
+
+model CollaboratorOnServices {
+  service    Service @relation(fields: [service_id], references: [id])
+  service_id String
+
+  collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
+  collaborator_id String
+
+  status     String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@id([service_id, collaborator_id])
+  @@map("collaboratorOnService")
+}
+
+model CollaboratorOnEstablishment {
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String
+
+  collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
+  collaborator_id String
+
+  status     String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@id([establishment_id, collaborator_id])
+}
+
+model AvailableTime {
+  id         String    @id @default(uuid())
+  days       Int
+  start      DateTime
+  finish     DateTime
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String
+
+  service    Service @relation(fields: [service_id], references: [id])
+  service_id String
+
+  collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
+  collaborator_id String
+}
+
+model Client {
+  id                    String                  @id @default(uuid())
+  name                  String
+  photo                 String
+  phone                 String
+  email                 String
+  password              String
+  birthDate             String
+  genre                 String
+  status                String
+  created_at            DateTime?               @default(now())
+  updated_at            DateTime?               @default(now())
+  establishmentOnClient EstablishmentOnClient[]
+  schedule              Schedule[]
+
+  @@map("client")
+}
+
+model EstablishmentOnClient {
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String
+
+  client    Client @relation(fields: [client_id], references: [id])
+  client_id String
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@id([establishment_id, client_id])
+}
+
+model Schedule {
+  id         String    @id @default(uuid())
+  date       DateTime
+  dateCancel DateTime?
+  commission Decimal   @db.Decimal(9, 2)
+  price      Decimal   @db.Decimal(9, 2)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  client    Client @relation(fields: [client_id], references: [id])
+  client_id String
+
+  establishment    Establishment @relation(fields: [establishment_id], references: [id])
+  establishment_id String
+
+  service    Service @relation(fields: [service_id], references: [id])
+  service_id String
+
+  collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
+  collaborator_id String
+
+  @@map("schedule")
+}
