@@ -10,6 +10,7 @@ import { CreateAddressController } from './controllers/address/CreateAddressCont
 import { EditAddressController } from './controllers/address/EditAddressController';
 import { CreateTypeServiceController } from './controllers/typeService/CreateTypeServiceController';
 import { EditTypeServiceController } from './controllers/typeService/EditTypeServiceController';
+import { ListServiceByEstablishmentController } from './controllers/typeService/ListServiceByEstablishmentController';
 
 
 const router = Router();
@@ -28,5 +29,6 @@ router.put('/id/address', new EditAddressController().handle);
 //ROTES TYPES SERVICES
 router.post('/typeService', new CreateTypeServiceController().handle);
 router.put('/id/typeService', new EditTypeServiceController().handle);
+router.get('/id/serviceByEstablishment', new ListServiceByEstablishmentController().handle);
 
 export { router }
