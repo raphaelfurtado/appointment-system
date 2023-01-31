@@ -12,11 +12,11 @@ interface CollaboratorRequest {
     status: string;
 }
 
-class EditCollaboratorService  {
-    async execute({ id, name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
+class EditCollaboratorService {
+    async execute({id, name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
 
         const collaborator = await prismaClient.collaborator.update({
-            where:{
+            where: {
                 id: id
             },
             data: {
@@ -35,4 +35,4 @@ class EditCollaboratorService  {
     }
 }
 
-export { EditCollaboratorService  }
+export { EditCollaboratorService }

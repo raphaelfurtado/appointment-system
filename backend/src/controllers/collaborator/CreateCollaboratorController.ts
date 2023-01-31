@@ -4,11 +4,12 @@ import { CreateCollaboratorService } from "../../services/collaborator/CreateCol
 class CreateCollaboratorController {
     async handle(req: Request, res: Response) {
 
-        const { name, photo, phone, email, password, birthDate, genre, status } = req.body;
+        const { establishment_id, name, photo, phone, email, password, birthDate, genre, status } = req.body;
 
         const createCollaboratorService = new CreateCollaboratorService();
 
         const collaborator = await createCollaboratorService.execute({
+            establishment_id,
             name,
             photo,
             phone,

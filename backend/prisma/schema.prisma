@@ -128,7 +128,6 @@ model CollaboratorOnEstablishment {
   collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
   collaborator_id String
 
-  status     String
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
 

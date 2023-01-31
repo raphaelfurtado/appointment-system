@@ -1,6 +1,7 @@
 import prismaClient from "../../prisma";
 
 interface CollaboratorRequest {
+    establishment_id: string;
     name: string;
     photo: string;
     phone: string;
@@ -12,7 +13,7 @@ interface CollaboratorRequest {
 }
 
 class CreateCollaboratorService {
-    async execute({ name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
+    async execute({ establishment_id, name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
 
         const emailAlreadyExists = await prismaClient.collaborator.findFirst({
             where:{
@@ -34,7 +35,7 @@ class CreateCollaboratorService {
             throw new Error('Phone Already exists!');
         }
 
-        const collaborator = prismaClient.collaborator.create({
+        const collaborator = await prismaClient.collaborator.create({
             data: {
                 name: name,
                 photo: photo,
@@ -44,6 +45,13 @@ class CreateCollaboratorService {
                 birthDate: birthDate,
                 genre: genre,
                 status: status,
+                establishment: {
+                    create: [
+                        {
+                            establishment_id: establishment_id,
+                        }
+                    ]
+                }
             }
         });
 
