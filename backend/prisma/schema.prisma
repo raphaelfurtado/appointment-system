@@ -131,7 +131,7 @@ model CollaboratorOnEstablishment {
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
 
-  @@id([establishment_id, collaborator_id])
+  @@id([collaborator_id])
 }
 
 model AvailableTime {

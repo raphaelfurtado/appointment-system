@@ -2,6 +2,7 @@ import prismaClient from "../../prisma";
 
 interface CollaboratorRequest {
     id: string;
+    establishment_id: string;
     name: string;
     photo: string;
     phone: string;
@@ -13,7 +14,7 @@ interface CollaboratorRequest {
 }
 
 class EditCollaboratorService {
-    async execute({id, name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
+    async execute({id, establishment_id, name, photo, phone, email, password, birthDate, genre, status }: CollaboratorRequest) {
 
         const collaborator = await prismaClient.collaborator.update({
             where: {
@@ -28,6 +29,16 @@ class EditCollaboratorService {
                 birthDate: birthDate,
                 genre: genre,
                 status: status,
+                establishment: {
+                    update: {
+                        where: {
+                              collaborator_id: id  
+                        },
+                        data:{
+                            establishment_id: establishment_id,
+                        }
+                    }
+                }
             }
         });
 
