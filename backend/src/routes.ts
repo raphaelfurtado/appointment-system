@@ -11,6 +11,9 @@ import { EditAddressController } from './controllers/address/EditAddressControll
 import { CreateTypeServiceController } from './controllers/typeService/CreateTypeServiceController';
 import { EditTypeServiceController } from './controllers/typeService/EditTypeServiceController';
 import { ListServiceByEstablishmentController } from './controllers/typeService/ListServiceByEstablishmentController';
+import { CreateCollaboratorController } from './controllers/collaborator/CreateCollaboratorController';
+import { EditCollaboratorController } from './controllers/collaborator/EditCollaboratorController';
+import { ListCollaboratorByEstablishmentController } from './controllers/collaborator/ListCollaboratorByEstablishmentController';
 
 
 const router = Router();
@@ -30,5 +33,10 @@ router.put('/id/address', new EditAddressController().handle);
 router.post('/typeService', new CreateTypeServiceController().handle);
 router.put('/id/typeService', new EditTypeServiceController().handle);
 router.get('/id/serviceByEstablishment', new ListServiceByEstablishmentController().handle);
+
+// ROTES COLLABORATOR
+router.post('/collaborator', new CreateCollaboratorController().handle);
+router.put('/id/collaborator', new EditCollaboratorController().handle);
+router.get('/id/collaboratorByEstablishment', new ListCollaboratorByEstablishmentController().handle);
 
 export { router }

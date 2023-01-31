@@ -15,7 +15,7 @@ interface TypeServiceRequest {
 class CreateTypeServiceService {
     async execute({ name, price, duration, commission, recurrence, description, status, establishment_id }: TypeServiceRequest) {
 
-        const typeService = prismaClient.service.create({
+        const typeService = await prismaClient.service.create({
             data: {
                 name: name,
                 price: price,

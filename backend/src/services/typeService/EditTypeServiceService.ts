@@ -15,7 +15,7 @@ interface TypeServiceRequest {
 class EditTypeServiceService {
     async execute({ id, name, price, duration, commission, recurrence, description, status }: TypeServiceRequest) {
 
-        const typeService = prismaClient.service.update({
+        const typeService = await prismaClient.service.update({
             where:{
                 id: id
             },

@@ -7,7 +7,7 @@ interface ServiceByEstablishment{
 class ListServiceByEstablishmentService{
     async execute({establishment_id}: ServiceByEstablishment){
 
-        const serviceByEstablishment = prismaClient.service.findMany({
+        const serviceByEstablishment = await prismaClient.service.findMany({
             where:{
                 establishment_id: establishment_id
             },

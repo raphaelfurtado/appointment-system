@@ -92,7 +92,7 @@ model Collaborator {
   phone      String
   email      String
   password   String
-  birthDate  String
+  birthDate  DateTime
   genre      String
   status     String
   created_at DateTime? @default(now())
