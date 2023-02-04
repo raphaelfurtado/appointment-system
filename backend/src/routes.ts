@@ -14,6 +14,8 @@ import { ListServiceByEstablishmentController } from './controllers/typeService/
 import { CreateCollaboratorController } from './controllers/collaborator/CreateCollaboratorController';
 import { EditCollaboratorController } from './controllers/collaborator/EditCollaboratorController';
 import { ListCollaboratorByEstablishmentController } from './controllers/collaborator/ListCollaboratorByEstablishmentController';
+import { ListCollaboratorByTypeServiceController } from './controllers/collaborator/ListCollaboratorByTypeServiceController';
+import { CreateCollaboratorTypeServiceController } from './controllers/collaborator/CreateCollaboratorTypeServiceController';
 
 
 const router = Router();
@@ -38,5 +40,7 @@ router.get('/id/serviceByEstablishment', new ListServiceByEstablishmentControlle
 router.post('/collaborator', new CreateCollaboratorController().handle);
 router.put('/id/collaborator', new EditCollaboratorController().handle);
 router.get('/id/collaboratorByEstablishment', new ListCollaboratorByEstablishmentController().handle);
+router.get('/id/collaboratorByService', new ListCollaboratorByTypeServiceController().handle);
+router.post('/collaboratorTypeService', new CreateCollaboratorTypeServiceController().handle);
 
 export { router }
